@@ -81,7 +81,57 @@ public class SmoothingFilter extends Frame implements ActionListener {
 				}
 			source.repaint();
 		}
+		if ( ((Button)e.getSource()).getLabel().equals("5x5 median")) {
+
+			/*
+				Get intensity values of each neighbouring pixel of target pixel
+				Put each R, G, B value in it's own array
+				Sort array, get middle (median) value
+				Set target pixel intensity as this median value
+			*/
+
+            Color[] pixel = new Color[9];
+
+            int[] R = new int[9];
+            int[] B = new int[9];
+            int[] G = new int[9];
+
+            for (int y = 1; y < height - 1; y++) {
+                for (int x = 1; x < width - 1; x++) {
+
+                    // Get each neighbouring pixel intensity
+                    pixel[0] = new Color(input.getRGB(x - 1, y - 1));
+                    pixel[1] = new Color(input.getRGB(x - 1, y));
+                    pixel[2] = new Color(input.getRGB(x - 1, y + 1));
+                    pixel[3] = new Color(input.getRGB(x, y + 1));
+                    pixel[4] = new Color(input.getRGB(x + 1, y + 1));
+                    pixel[5] = new Color(input.getRGB(x + 1, y));
+                    pixel[6] = new Color(input.getRGB(x + 1, x - 1));
+                    pixel[7] = new Color(input.getRGB(x, y - 1));
+                    pixel[8] = new Color(input.getRGB(x, y));
+
+                    // Store each intensity in array
+                    for (int k = 0; k < 9; k++) {
+                        R[k] = pixel[k].getRed();
+                        B[k] = pixel[k].getBlue();
+                        G[k] = pixel[k].getGreen();
+                    }
+
+                    // Sort each array
+                    Arrays.sort(R);
+                    Arrays.sort(G);
+                    Arrays.sort(B);
+
+                    // Since we are dealing with the neighbouring 8 pixels, we want the 4th index from the sorted array
+                    int p = (R[4] << 16) | G[4] << 8 | B[4];
+                    input.setRGB(x, y, p);
+
+                }
+            }
+            target.resetImage(input);
+        }
 	}
+
 	public static void main(String[] args) {
 		new SmoothingFilter(args.length==1 ? args[0] : "baboon.png");
 	}
