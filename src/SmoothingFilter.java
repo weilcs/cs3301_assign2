@@ -9,6 +9,7 @@ import java.util.stream.*; // Newly added library.
 // Main class
 public class SmoothingFilter extends Frame implements ActionListener {
 	BufferedImage input;
+	BufferedImage unmodifiedInput;
 	ImageCanvas source, target;
 	TextField texSigma;
 	int width, height;
@@ -18,6 +19,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 		// load image
 		try {
 			input = ImageIO.read(new File(name));
+			unmodifiedInput = ImageIO.read(new File(name));
 		}
 		catch ( Exception ex ) {
 			ex.printStackTrace();
@@ -101,15 +103,15 @@ public class SmoothingFilter extends Frame implements ActionListener {
                 for (int x = 1; x < width - 1; x++) {
 
                     // Get each neighbouring pixel intensity
-                    pixel[0] = new Color(input.getRGB(x - 1, y - 1));
-                    pixel[1] = new Color(input.getRGB(x - 1, y));
-                    pixel[2] = new Color(input.getRGB(x - 1, y + 1));
-                    pixel[3] = new Color(input.getRGB(x, y + 1));
-                    pixel[4] = new Color(input.getRGB(x + 1, y + 1));
-                    pixel[5] = new Color(input.getRGB(x + 1, y));
-                    pixel[6] = new Color(input.getRGB(x + 1, x - 1));
-                    pixel[7] = new Color(input.getRGB(x, y - 1));
-                    pixel[8] = new Color(input.getRGB(x, y));
+                    pixel[0] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
+                    pixel[1] = new Color(unmodifiedInput.getRGB(x - 1, y));
+                    pixel[2] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
+                    pixel[3] = new Color(unmodifiedInput.getRGB(x, y + 1));
+                    pixel[4] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
+                    pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
+                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, x - 1));
+                    pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
+                    pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
 
                     // Store each intensity in array
                     for (int k = 0; k < 9; k++) {
@@ -150,15 +152,15 @@ public class SmoothingFilter extends Frame implements ActionListener {
 				for (int x = 1; x < width - 1; x++) {
 
 					// Get each neighbouring pixel intensity
-					pixel[0] = new Color(input.getRGB(x - 1, y - 1));
-					pixel[1] = new Color(input.getRGB(x - 1, y));
-					pixel[2] = new Color(input.getRGB(x - 1, y + 1));
-					pixel[3] = new Color(input.getRGB(x, y + 1));
-					pixel[4] = new Color(input.getRGB(x + 1, y + 1));
-					pixel[5] = new Color(input.getRGB(x + 1, y));
-					pixel[6] = new Color(input.getRGB(x + 1, x - 1));
-					pixel[7] = new Color(input.getRGB(x, y - 1));
-					pixel[8] = new Color(input.getRGB(x, y));
+					pixel[0] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
+					pixel[1] = new Color(unmodifiedInput.getRGB(x - 1, y));
+					pixel[2] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
+					pixel[3] = new Color(unmodifiedInput.getRGB(x, y + 1));
+					pixel[4] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
+					pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
+					pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, x - 1));
+					pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
+					pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
 
 					// Store each intensity in array
 					for (int k = 0; k < 9; k++) {
