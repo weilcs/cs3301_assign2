@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
+import java.util.stream.*; // Newly added library.
 
 // Main class
 public class SmoothingFilter extends Frame implements ActionListener {
@@ -130,6 +131,53 @@ public class SmoothingFilter extends Frame implements ActionListener {
             }
             target.resetImage(input);
         }
+
+		if ( ((Button)e.getSource()).getLabel().equals("5x5 mean")) {
+			/*
+				Get intensity values of each neighbouring pixel of target pixel
+				Put each R, G, B value in it's own array
+				Calculate the mean of each RGB array.
+				Set target pixel intensity as the mean value.
+			*/
+
+			Color[] pixel = new Color[9];
+
+			int[] R = new int[9];
+			int[] B = new int[9];
+			int[] G = new int[9];
+
+			for (int y = 1; y < height - 1; y++) {
+				for (int x = 1; x < width - 1; x++) {
+
+					// Get each neighbouring pixel intensity
+					pixel[0] = new Color(input.getRGB(x - 1, y - 1));
+					pixel[1] = new Color(input.getRGB(x - 1, y));
+					pixel[2] = new Color(input.getRGB(x - 1, y + 1));
+					pixel[3] = new Color(input.getRGB(x, y + 1));
+					pixel[4] = new Color(input.getRGB(x + 1, y + 1));
+					pixel[5] = new Color(input.getRGB(x + 1, y));
+					pixel[6] = new Color(input.getRGB(x + 1, x - 1));
+					pixel[7] = new Color(input.getRGB(x, y - 1));
+					pixel[8] = new Color(input.getRGB(x, y));
+
+					// Store each intensity in array
+					for (int k = 0; k < 9; k++) {
+						R[k] = pixel[k].getRed();
+						B[k] = pixel[k].getBlue();
+						G[k] = pixel[k].getGreen();
+					}
+
+					// Calculating the mean of each RGB array and applying it to the image.
+					int rMean = (int) (IntStream.of(R).sum() / R.length);
+					int gMean = (int) (IntStream.of(G).sum() / G.length);
+					int bMean = (int) (IntStream.of(B).sum() / B.length);
+					int p = (rMean << 16) | gMean << 8 | bMean;
+					input.setRGB(x, y, p);
+
+				}
+			}
+			target.resetImage(input);
+		}
 	}
 
 	public static void main(String[] args) {
