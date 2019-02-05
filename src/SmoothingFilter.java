@@ -109,7 +109,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
                     pixel[3] = new Color(unmodifiedInput.getRGB(x, y + 1));
                     pixel[4] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
                     pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
-                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, x - 1));
+                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
                     pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
                     pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
 
@@ -160,7 +160,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					pixel[3] = new Color(unmodifiedInput.getRGB(x, y + 1));
 					pixel[4] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
 					pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
-					pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, x - 1));
+					pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
 					pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
 					pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
 
