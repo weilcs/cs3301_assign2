@@ -113,6 +113,8 @@ public class SmoothingFilter extends Frame implements ActionListener {
                     pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
                     pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
 
+					// Needs to be 5x5 filter, require 24 pixels
+
                     // Store each intensity in array
                     for (int k = 0; k < 9; k++) {
                         R[k] = pixel[k].getRed();
@@ -161,6 +163,8 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, x - 1));
 					pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
 					pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
+
+					// Needs to be 5x5 filter, require 24 pixels
 
 					// Store each intensity in array
 					for (int k = 0; k < 9; k++) {
