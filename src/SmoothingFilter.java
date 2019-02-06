@@ -94,16 +94,19 @@ public class SmoothingFilter extends Frame implements ActionListener {
 				Set target pixel intensity as this median value
 			*/
 
-            Color[] pixel = new Color[9];
+            Color[] pixel = new Color[25];
 
-            int[] R = new int[9];
-            int[] B = new int[9];
-            int[] G = new int[9];
+            int[] R = new int[25];
+            int[] B = new int[25];
+            int[] G = new int[25];
 
-            for (int y = 1; y < height - 1; y++) {
-                for (int x = 1; x < width - 1; x++) {
+
+            for (int y = 3; y < height - 3; y++) {
+                for (int x = 3; x < width - 3; x++) {
+
 
                     // Get each neighbouring pixel intensity
+
                     pixel[0] = new Color(unmodifiedInput.getRGB(x, y));
                     pixel[1] = new Color(unmodifiedInput.getRGB(x, y + 1));
                     pixel[2] = new Color(unmodifiedInput.getRGB(x, y - 1));
@@ -114,7 +117,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
                     pixel[7] = new Color(unmodifiedInput.getRGB(x - 1 , y));
                     pixel[8] = new Color(unmodifiedInput.getRGB(x - 2, y));
 					pixel[9] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
-					pixel[10] = new Color(unmodifiedInput.getRGB(x + 2, y + 1));
+				    pixel[10] = new Color(unmodifiedInput.getRGB(x + 2, y + 1));
 					pixel[11] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
 					pixel[12] = new Color(unmodifiedInput.getRGB(x - 2, y + 1));
 					pixel[13] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
