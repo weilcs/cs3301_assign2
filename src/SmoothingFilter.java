@@ -87,7 +87,8 @@ public class SmoothingFilter extends Frame implements ActionListener {
 		if ( ((Button)e.getSource()).getLabel().equals("5x5 median")) {
 
 			/*
-				Get intensity values of each neighbouring pixel of target pixel
+				5x5 median filter:
+				Get intensity values of each (24) neighbouring pixels of target pixel
 				Put each R, G, B value in it's own array
 				Sort array, get middle (median) value
 				Set target pixel intensity as this median value
@@ -103,20 +104,34 @@ public class SmoothingFilter extends Frame implements ActionListener {
                 for (int x = 1; x < width - 1; x++) {
 
                     // Get each neighbouring pixel intensity
-                    pixel[0] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
-                    pixel[1] = new Color(unmodifiedInput.getRGB(x - 1, y));
-                    pixel[2] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
-                    pixel[3] = new Color(unmodifiedInput.getRGB(x, y + 1));
-                    pixel[4] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
+                    pixel[0] = new Color(unmodifiedInput.getRGB(x, y));
+                    pixel[1] = new Color(unmodifiedInput.getRGB(x, y + 1));
+                    pixel[2] = new Color(unmodifiedInput.getRGB(x, y - 1));
+                    pixel[3] = new Color(unmodifiedInput.getRGB(x, y - 2));
+                    pixel[4] = new Color(unmodifiedInput.getRGB(x, y - 3));
                     pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
-                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
-                    pixel[7] = new Color(unmodifiedInput.getRGB(x, y - 1));
-                    pixel[8] = new Color(unmodifiedInput.getRGB(x, y));
-
-					// Needs to be 5x5 filter, require 24 pixels
+                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 2, y));
+                    pixel[7] = new Color(unmodifiedInput.getRGB(x - 1 , y));
+                    pixel[8] = new Color(unmodifiedInput.getRGB(x - 2, y));
+					pixel[9] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
+					pixel[10] = new Color(unmodifiedInput.getRGB(x + 2, y + 1));
+					pixel[11] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
+					pixel[12] = new Color(unmodifiedInput.getRGB(x - 2, y + 1));
+					pixel[13] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
+					pixel[14] = new Color(unmodifiedInput.getRGB(x + 2, y - 1));
+					pixel[15] = new Color(unmodifiedInput.getRGB(x + 2, y - 2));
+					pixel[16] = new Color(unmodifiedInput.getRGB(x + 2, y - 2));
+					pixel[17] = new Color(unmodifiedInput.getRGB(x + 1, y - 3));
+					pixel[18] = new Color(unmodifiedInput.getRGB(x  + 2, y - 3));
+					pixel[19] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
+					pixel[20] = new Color(unmodifiedInput.getRGB(x - 1, y - 2));
+					pixel[21] = new Color(unmodifiedInput.getRGB(x - 1, y - 3));
+					pixel[22] = new Color(unmodifiedInput.getRGB(x - 2, y - 1));
+					pixel[23] = new Color(unmodifiedInput.getRGB(x - 2, y - 2));
+					pixel[24] = new Color(unmodifiedInput.getRGB(x - 2, y - 3));
 
                     // Store each intensity in array
-                    for (int k = 0; k < 9; k++) {
+                    for (int k = 0; k < 25; k++) {
                         R[k] = pixel[k].getRed();
                         B[k] = pixel[k].getBlue();
                         G[k] = pixel[k].getGreen();
@@ -127,8 +142,8 @@ public class SmoothingFilter extends Frame implements ActionListener {
                     Arrays.sort(G);
                     Arrays.sort(B);
 
-                    // Since we are dealing with the neighbouring 8 pixels, we want the 4th index from the sorted array
-                    int p = (R[4] << 16) | G[4] << 8 | B[4];
+                    // Since we are dealing with the neighbouring 24 pixels, we want the 16th index from the sorted array
+                    int p = (R[16] << 16) | G[16] << 8 | B[16];
                     input.setRGB(x, y, p);
 
                 }
