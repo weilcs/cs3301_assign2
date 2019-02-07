@@ -1,5 +1,9 @@
+# Vscode stuff.
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Misc stuff
+.DS_Store
