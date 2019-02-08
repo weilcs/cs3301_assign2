@@ -466,7 +466,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					// Check to see which region has the smallest variance, then use that region's mean
 					if (smallestVar == var1) {
 								// Convert from HSB back to RGB now using the mean as the brightness value
-								int rgb = Color.HSBtoRGB(hsb1[0], hsb1[0], mean1);
+								int rgb = Color.HSBtoRGB(hsb1[0], hsb1[1], mean1);
 								Color newColor = new Color(rgb);
 
 								int newR = newColor.getRed();
@@ -479,7 +479,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					}
 
 					if (smallestVar == var2) {
-								int rgb = Color.HSBtoRGB(hsb2[0], hsb2[0], mean2);
+								int rgb = Color.HSBtoRGB(hsb2[0], hsb2[1], mean2);
 								Color newColor = new Color(rgb);
 
 								int newR = newColor.getRed();
@@ -493,7 +493,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 
 					if (smallestVar == var3) {
 
-								int rgb = Color.HSBtoRGB(hsb3[0], hsb3[0], mean3);
+								int rgb = Color.HSBtoRGB(hsb3[0], hsb3[1], mean3);
 								Color newColor = new Color(rgb);
 
 								int newR = newColor.getRed();
@@ -506,7 +506,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 
 					if (smallestVar == var4) {
 
-								int rgb = Color.HSBtoRGB(hsb4[0], hsb4[0], mean4);
+								int rgb = Color.HSBtoRGB(hsb4[0], hsb4[1], mean4);
 								Color newColor = new Color(rgb);
 
 								int newR = newColor.getRed();
