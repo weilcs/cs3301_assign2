@@ -257,7 +257,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					region_1[13] = new Color(unmodifiedInput.getRGB(x - 2, y + 1));
 					region_1[14] = new Color(unmodifiedInput.getRGB(x - 2, y + 2));
 					region_1[15] = new Color(unmodifiedInput.getRGB(x - 2, y + 3));
-					region_1[16] = new Color(unmodifiedInput.getRGB(x - 2, y + 4 ));
+					region_1[16] = new Color(unmodifiedInput.getRGB(x - 2, y + 4));
 
 					region_1[17] = new Color(unmodifiedInput.getRGB(x - 3, y + 1));
 					region_1[18] = new Color(unmodifiedInput.getRGB(x - 3, y + 2));
@@ -368,181 +368,157 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					region_4[23] = new Color(unmodifiedInput.getRGB(x + 4, y - 3));
 					region_4[24] = new Color(unmodifiedInput.getRGB(x + 4, y - 4));
 
-				}
 
-			}
+					// Variables to store the mean of each region
+					float mean1 = 0;
+					float mean2 = 0;
+					float mean3 = 0;
+					float mean4 = 0;
 
-			// Variables to store the mean of each region
-			float mean1 = 0;
-			float mean2 = 0;
-			float mean3 = 0;
-			float mean4 = 0;
+					// Float array to store HSB values for each region
 
-			// Float array to store HSB values for each region
+					float[] hsb1 = new float[3];
+					float[] hsb2 = new float[3];
+					float[] hsb3 = new float[3];
+					float[] hsb4 = new float[3];
 
-			float[] hsb1 = new float[3];
-			float[] hsb2 = new float[3];
-			float[] hsb3 = new float[3];
-			float[] hsb4 = new float[3];
-
-			int r, g, b;
+					int r, g, b;
 
 
-			// Convert each region from RGB to HSB and calculate the mean
-			for (int i = 0; i < 25; i++)
-			{
-				r = region_1[i].getRed();
-				g = region_1[i].getGreen();
-				b = region_1[i].getBlue();
+					// Convert each region from RGB to HSB and calculate the mean
+					for (int i = 0; i < 25; i++) {
+						r = region_1[i].getRed();
+						g = region_1[i].getGreen();
+						b = region_1[i].getBlue();
 
-				// Convert pixel from RGB to HSB
-				hsb1 = region_1[i].RGBtoHSB(r, g, b, hsb1);
+						// Convert pixel from RGB to HSB
+						hsb1 = region_1[i].RGBtoHSB(r, g, b, hsb1);
 
-				// Add to mean
-				mean1 += hsb1[2];
+						// Add to mean
+						mean1 += hsb1[2];
 
-				  r = region_2[i].getRed();
-				  g = region_2[i].getGreen();
-				  b = region_2[i].getBlue();
+						r = region_2[i].getRed();
+						g = region_2[i].getGreen();
+						b = region_2[i].getBlue();
 
-				hsb2 = region_2[i].RGBtoHSB(r, g, b, hsb2);
-				mean2 += hsb2[2];
+						hsb2 = region_2[i].RGBtoHSB(r, g, b, hsb2);
+						mean2 += hsb2[2];
 
-				r = region_3[i].getRed();
-				g = region_3[i].getGreen();
-				b = region_3[i].getBlue();
+						r = region_3[i].getRed();
+						g = region_3[i].getGreen();
+						b = region_3[i].getBlue();
 
-				hsb3 = region_3[i].RGBtoHSB(r, g, b, hsb3);
-				mean3 += hsb3[2];
+						hsb3 = region_3[i].RGBtoHSB(r, g, b, hsb3);
+						mean3 += hsb3[2];
 
-				r = region_4[i].getRed();
-				g = region_4[i].getGreen();
-				b = region_4[i].getBlue();
+						r = region_4[i].getRed();
+						g = region_4[i].getGreen();
+						b = region_4[i].getBlue();
 
-				hsb4 = region_4[i].RGBtoHSB(r, g, b, hsb4);
-				mean4 += hsb4[2];
-			}
+						hsb4 = region_4[i].RGBtoHSB(r, g, b, hsb4);
+						mean4 += hsb4[2];
+					}
 
-			// Divide each value by the number of pixels to get actual mean
-			mean1 /= region_1.length;
-			//System.out.println(mean1);
+					// Divide each value by the number of pixels to get actual mean
+					mean1 /= region_1.length;
+					//System.out.println(mean1);
 
-			mean2 /= region_2.length;
-			//System.out.println(mean2);
+					mean2 /= region_2.length;
+					//System.out.println(mean2);
 
-			mean3 /= region_3.length;
-			//System.out.println(mean3);
+					mean3 /= region_3.length;
+					//System.out.println(mean3);
 
-			mean4 /= region_4.length;
+					mean4 /= region_4.length;
 
-			// Variables to store values for calculating each variance
+					// Variables to store values for calculating each variance
 
-			float temp1 = 0;
-			float temp2 = 0;
-			float temp3 = 0;
-			float temp4 = 0;
+					float temp1 = 0;
+					float temp2 = 0;
+					float temp3 = 0;
+					float temp4 = 0;
 
-			float var1 = 0;
-			float var2 = 0;
-			float var3 = 0;
-			float var4 = 0;
+					float var1 = 0;
+					float var2 = 0;
+					float var3 = 0;
+					float var4 = 0;
 
-			// Calculate variance of each region
+					// Calculate variance of each region
 
-			for (int i = 0; i < 25; i++)
-			{
-				temp1 += (hsb1[2] - mean1) * (hsb1[2] - mean1);
-				var1 = temp1 / (region_1.length - 1);
+					for (int i = 0; i < 25; i++) {
+						temp1 += (hsb1[2] - mean1) * (hsb1[2] - mean1);
+						var1 = temp1 / (region_1.length - 1);
 
-				temp2 += (hsb2[2] - mean2) * (hsb2[2] - mean2);
-				var2 = temp2 / (region_2.length - 1);
+						temp2 += (hsb2[2] - mean2) * (hsb2[2] - mean2);
+						var2 = temp2 / (region_2.length - 1);
 
-				temp3 += (hsb3[2] - mean3) * (hsb3[2] - mean3);
-				var3 = temp3 / (region_3.length - 1);
+						temp3 += (hsb3[2] - mean3) * (hsb3[2] - mean3);
+						var3 = temp3 / (region_3.length - 1);
 
-				temp4 += (hsb4[2] - mean4) * (hsb4[2] - mean4);
-				var4 = temp4 / (region_4.length - 1);
-			}
+						temp4 += (hsb4[2] - mean4) * (hsb4[2] - mean4);
+						var4 = temp4 / (region_4.length - 1);
+					}
 
-			// Find which variance is the smallest
+					// Find which variance is the smallest
 
-			float smallestVar = Math.min(var1, Math.min(var2, Math.min(var3, var4)));
+					float smallestVar = Math.min(var1, Math.min(var2, Math.min(var3, var4)));
 
-			// Check to see which region has the smallest variance, then use that region's mean
-			if (smallestVar == var1)
-			{
-				System.out.println("Region 1 has the smallest variance");
-				for (int x = 0; x < width; x++) {
-					for (int y = 0; y < height; y++)
-					{
-						// Convert from HSB back to RGB now using the mean as the brightness value
-						int rgb = Color.HSBtoRGB(hsb1[0], hsb1[0], mean1);
-						Color newColor = new Color(rgb);
+					// Check to see which region has the smallest variance, then use that region's mean
+					if (smallestVar == var1) {
+								// Convert from HSB back to RGB now using the mean as the brightness value
+								int rgb = Color.HSBtoRGB(hsb1[0], hsb1[0], mean1);
+								Color newColor = new Color(rgb);
 
-						int newR = newColor.getRed();
-						int newG = newColor.getGreen();
-						int newB = newColor.getBlue();
+								int newR = newColor.getRed();
+								int newG = newColor.getGreen();
+								int newB = newColor.getBlue();
 
-						int p = (newR << 16 | newG << 8 | newB);
-						input.setRGB(x, y, p);
+								int p = (newR << 16 | newG << 8 | newB);
+								input.setRGB(x, y, p);
+
+					}
+
+					if (smallestVar == var2) {
+								int rgb = Color.HSBtoRGB(hsb2[0], hsb2[0], mean2);
+								Color newColor = new Color(rgb);
+
+								int newR = newColor.getRed();
+								int newG = newColor.getGreen();
+								int newB = newColor.getBlue();
+
+								int p = (newR << 16 | newG << 8 | newB);
+								input.setRGB(x, y, p);
+
+					}
+
+					if (smallestVar == var3) {
+
+								int rgb = Color.HSBtoRGB(hsb3[0], hsb3[0], mean3);
+								Color newColor = new Color(rgb);
+
+								int newR = newColor.getRed();
+								int newG = newColor.getGreen();
+								int newB = newColor.getBlue();
+
+								int p = (newR << 16 | newG << 8 | newB);
+								input.setRGB(x, y, p);
+					}
+
+					if (smallestVar == var4) {
+
+								int rgb = Color.HSBtoRGB(hsb4[0], hsb4[0], mean4);
+								Color newColor = new Color(rgb);
+
+								int newR = newColor.getRed();
+								int newG = newColor.getGreen();
+								int newB = newColor.getBlue();
+
+								int p = (newR << 16 | newG << 8 | newB);
+								input.setRGB(x, y, p);
 					}
 				}
 			}
-
-			if (smallestVar == var2) {
-				System.out.println("Region 2 has the smallest variance");
-				for (int x = 0; x < width; x++) {
-					for (int y = 0; y < height; y++) {
-						int rgb = Color.HSBtoRGB(hsb2[0], hsb2[0], mean2);
-						Color newColor = new Color(rgb);
-
-						int newR = newColor.getRed();
-						int newG = newColor.getGreen();
-						int newB = newColor.getBlue();
-
-						int p = (newR << 16 | newG << 8 | newB);
-						input.setRGB(x, y, p);
-					}
-				}
-			}
-
-			if (smallestVar == var3)
-			{
-				System.out.println("Region 3 has the smallest variance");
-
-				for (int x = 0; x < width; x++) {
-					for (int y = 0; y < height; y++) {
-						int rgb = Color.HSBtoRGB(hsb3[0], hsb3[0], mean3);
-						Color newColor = new Color(rgb);
-
-						int newR = newColor.getRed();
-						int newG = newColor.getGreen();
-						int newB = newColor.getBlue();
-
-						int p = (newR << 16 | newG << 8 | newB);
-						input.setRGB(x, y, p);
-					}
-
-				}
-			}
-
-			if (smallestVar == var4)
-			{
-				System.out.println("Region 4 has the smallest variance");
-				for (int x = 0; x < width; x++) {
-					for (int y = 0; y < height; y++) {
-						int rgb = Color.HSBtoRGB(hsb4[0], hsb4[0], mean4);
-						Color newColor = new Color(rgb);
-
-						int newR = newColor.getRed();
-						int newG = newColor.getGreen();
-						int newB = newColor.getBlue();
-
-						int p = (newR << 16 | newG << 8 | newB);
-						input.setRGB(x, y, p);
-					}
-				}
-			}
+			target.resetImage(input);
 		}
 	}
 
