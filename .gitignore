@@ -1,4 +1,4 @@
 workspace.xml
 modules.xml
-*.xml
+.idea
 /out
