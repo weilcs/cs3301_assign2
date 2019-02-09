@@ -1,4 +1,6 @@
 workspace.xml
 modules.xml
-.idea
-/out
+.idea/*
+!.idea/.gitkeep 
+out/*
+!out/.gitkeep
