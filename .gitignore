@@ -1,3 +1,4 @@
 workspace.xml
 modules.xml
+*.xml
 /out
