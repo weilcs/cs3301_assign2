@@ -519,6 +519,176 @@ public class SmoothingFilter extends Frame implements ActionListener {
 				}
 			}
 			target.resetImage(input);
+
+		}
+
+		if ( ((Button)e.getSource()).getLabel().equals("5x5 Gaussian")) {
+			Kernel kernel = makeKernel(5, 1);
+			int[] inPixels = new int[width*height];
+			int[] outPixels = new int[width*height];
+
+
+
+			unmodifiedInput.getRGB(0,0,width, height, inPixels, 0, width);
+
+			convolveAndTranspose(kernel, inPixels, outPixels, width, height);
+			convolveAndTranspose(kernel, outPixels, inPixels, width, height);
+
+			for (int i =0; i < width*height; i++){
+				System.out.println(inPixels[i]);
+			}
+
+			input.setRGB(0,0, width, height, inPixels, 0, width);
+			target.resetImage(input);
+
+
+
+
+
+		}
+	}
+
+
+	public static Kernel makeKernel(int rows, float sigma){
+		int r = (rows-1)/2;
+		float r2 = r*r;
+		float[] matrix = new float[rows];
+		float sigma22 = 2*sigma*sigma;
+		float sigmaPi2 = 2*(float)Math.PI*sigma;
+		float sqrtSigmaPi2 = (float)Math.sqrt(sigmaPi2);
+		float total = 0;
+		int index = 0;
+		for (int row = -r; row <= r; row++){
+			float distance = row*row;
+			if (distance > r2)
+				matrix[index] = 0;
+			else
+				matrix[index] = (float)Math.exp(-(distance)/sigma22)/sqrtSigmaPi2;
+			total += matrix[index];
+			index++;
+		}
+
+		for (int i = 0; i < rows; i++){
+			matrix[i] /= total;
+			System.out.println(matrix[i]);
+		}
+
+		return new Kernel(rows, 1, matrix);
+	}
+
+
+
+	/*public static void convolveH(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height){
+		int index = 0;
+		float[] matrix = kernel.getKernelData(null);
+		int cols = kernel.getWidth();
+		int cols2 = cols/2;
+
+		for (int y = 0; y < height; y++){
+			int ioffset = y*width;
+			for (int x = 0; x < width; x++){
+				float r = 0, g = 0, b = 0;
+				int moffset = cols2;
+				for (int col = -cols2; col <= cols2; col++){
+					float f = matrix[moffset+col];
+					if (f != 0){
+						int ix = x+col;
+						ix = ix < 0 ? 0 : ix >= width ? width-1 : width;
+						int rgb = inPixels[ioffset + ix];
+						r += f * ((rgb >> 16) & 0xff);
+						g += f * ((rgb >> 18) & 0xff);
+						b += f * (rgb & 0xff);
+					}
+				}
+				r += 0.5;
+				g += 0.5;
+				b += 0.5;
+
+				int ir = (int)(r < 0 ? 0 : r > 255 ? 255 : r);
+				int ig = (int)(g < 0 ? 0 : g > 255 ? 255 : g);
+				int ib = (int)(b < 0 ? 0 : b > 255 ? 255 : b);
+				outPixels[index++] = (ir << 16)|(ig << 8)|ib;
+			}
+
+		}
+	}
+
+	public static void convolveV(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height){
+		int index = 0;
+		float[] matrix = kernel.getKernelData(null);
+		int rows = kernel.getHeight();
+		int rows2 = rows/2;
+
+		for (int y = 0; y < height; y++){
+			for (int x = 0; x < width; x++){
+				float r = 0, g = 0, b = 0;
+				for (int row = -rows2; row <= rows2; row++){
+					int iy = y+row;
+					int ioffset;
+					if (iy < 0)
+						ioffset = 0;
+					else if (iy >= height)
+						ioffset = (height - 1) * width;
+					else
+						ioffset = iy * width;
+					float f = matrix[row + rows2];
+
+					if (f != 0){
+						int rgb = inPixels[ioffset];
+						r += f * ((rgb >> 16) & 0xff);
+						g += f * ((rgb >> 18) & 0xff);
+						b += f * (rgb & 0xff);
+					}
+
+				}
+
+				r += 0.5;
+				g += 0.5;
+				b += 0.5;
+
+				int ir = (int)(r < 0 ? 0 : r > 255 ? 255 : r);
+				int ig = (int)(g < 0 ? 0 : g > 255 ? 255 : g);
+				int ib = (int)(b < 0 ? 0 : b > 255 ? 255 : b);
+				outPixels[index++] = (ir << 16)|(ig << 8)|ib;
+			}
+
+		}
+	}*/
+
+	public static void convolveAndTranspose(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height){
+
+		float[] matrix = kernel.getKernelData(null);
+		int cols = kernel.getWidth();
+		int cols2 = cols/2;
+
+		for (int y = 0; y < height-1; y++){
+			int index = 0;
+			int ioffset = y*width;
+			for (int x = 0; x < width-1; x++){
+				float r = 0, g = 0, b = 0;
+				int moffset = cols2;
+				for (int col = -cols2; col <= cols2; col++){
+					float f = matrix[moffset+col];
+					if (f != 0){
+						int ix = x+col;
+						ix = ix < 0 ? 0 : ix >= width ? width-1 : width;
+						int rgb = inPixels[ioffset + ix];
+						r += f * ((rgb >> 16) & 0xff);
+						g += f * ((rgb >> 18) & 0xff);
+						b += f * (rgb & 0xff);
+					}
+				}
+				r += 0.5;
+				g += 0.5;
+				b += 0.5;
+
+				int ir = (int)(r < 0 ? 0 : r > 255 ? 255 : r);
+				int ig = (int)(g < 0 ? 0 : g > 255 ? 255 : g);
+				int ib = (int)(b < 0 ? 0 : b > 255 ? 255 : b);
+				outPixels[index++] = (ir << 16)|(ig << 8)|ib;
+				index += height;
+			}
+
 		}
 	}
 
