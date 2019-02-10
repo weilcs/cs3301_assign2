@@ -523,16 +523,17 @@ public class SmoothingFilter extends Frame implements ActionListener {
 		}
 
 		if ( ((Button)e.getSource()).getLabel().equals("5x5 Gaussian")) {
-			Kernel[] kernels = makeKernel(5, Float.valueOf(texSigma.getText()));
+			Kernel[] kernels = makeGaussianKernel(5, Float.valueOf(texSigma.getText()));
 			Kernel kernelV = kernels[0];
 			Kernel kernelH = kernels[1];
 
+			// vertical direction convolution
 			ConvolveOp op1 = new ConvolveOp(kernelV);
 			BufferedImage v = null;
 
 			v = op1.filter(unmodifiedInput, null);
 
-
+			//horizontal direction convolution
 			ConvolveOp op2 = new ConvolveOp(kernelH);
 			op2.filter(v, input);
 
@@ -542,7 +543,9 @@ public class SmoothingFilter extends Frame implements ActionListener {
 	}
 
 
-	public static Kernel[] makeKernel(int rows, float sigma){
+
+	//A function to create an array of 1-D gaussian kernels, one is in vertical direction, the other is in horizontal direction
+	public static Kernel[] makeGaussianKernel(int rows, float sigma){
 		int r = (rows-1)/2;
 		float r2 = r*r;
 		float[] matrix = new float[rows];
