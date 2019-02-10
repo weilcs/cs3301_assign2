@@ -81,6 +81,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 					green = green < 0 ? 0 : green > 255 ? 255 : green;
 					blue = blue < 0 ? 0 : blue > 255 ? 255 : blue;
 					source.image.setRGB(x, y, (new Color(red, green, blue)).getRGB());
+					unmodifiedInput.setRGB(x, y, (new Color(red, green, blue)).getRGB());
 				}
 			source.repaint();
 		}
