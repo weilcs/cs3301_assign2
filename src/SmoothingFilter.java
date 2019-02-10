@@ -147,7 +147,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
                     Arrays.sort(B);
 
                     // Since we are dealing with the neighbouring 24 pixels, we want the 16th index from the sorted array
-                    int p = (R[16] << 16) | G[16] << 8 | B[16];
+                    int p = (R[R.length / 2] << 16) | G[G.length / 2] << 8 | B[B.length / 2];
                     input.setRGB(x, y, p);
 
                 }
