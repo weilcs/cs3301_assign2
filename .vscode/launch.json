@@ -1,0 +1,17 @@
+{
+    "configurations": [
+      {
+        "type": "java",
+        "name": "CodeLens (Launch) - SmoothingFilter",
+        "request": "launch",
+        "mainClass": "src.SmoothingFilter",
+        "projectName": "cs3301_assign2_c3d12d3"
+      },
+      {
+        "type": "java",
+        "name": "CodeLens (Launch) - SmoothingFilter",
+        "request": "launch",
+        "mainClass": "SmoothingFilter"
+      }
+    ]
+}
