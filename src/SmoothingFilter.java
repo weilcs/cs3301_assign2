@@ -154,37 +154,10 @@ public class SmoothingFilter extends Frame implements ActionListener {
             int[] G = new int[25];
 
 			// y = 3 and x / y < height / width < 3 to stay within border of image
-            for (int y = 3; y < height - 3; y++) {
-                for (int x = 3; x < width - 3; x++) {
-
-
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     // Get each neighbouring pixel intensity
-					// Not sure if there's a nicer way to do this?
-                    pixel[0] = new Color(unmodifiedInput.getRGB(x, y));
-                    pixel[1] = new Color(unmodifiedInput.getRGB(x, y + 1));
-                    pixel[2] = new Color(unmodifiedInput.getRGB(x, y - 1));
-                    pixel[3] = new Color(unmodifiedInput.getRGB(x, y - 2));
-                    pixel[4] = new Color(unmodifiedInput.getRGB(x, y - 3));
-                    pixel[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
-                    pixel[6] = new Color(unmodifiedInput.getRGB(x + 2, y));
-                    pixel[7] = new Color(unmodifiedInput.getRGB(x - 1 , y));
-                    pixel[8] = new Color(unmodifiedInput.getRGB(x - 2, y));
-					pixel[9] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
-				    pixel[10] = new Color(unmodifiedInput.getRGB(x + 2, y + 1));
-					pixel[11] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
-					pixel[12] = new Color(unmodifiedInput.getRGB(x - 2, y + 1));
-					pixel[13] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
-					pixel[14] = new Color(unmodifiedInput.getRGB(x + 2, y - 1));
-					pixel[15] = new Color(unmodifiedInput.getRGB(x + 2, y - 2));
-					pixel[16] = new Color(unmodifiedInput.getRGB(x + 2, y - 2));
-					pixel[17] = new Color(unmodifiedInput.getRGB(x + 1, y - 3));
-					pixel[18] = new Color(unmodifiedInput.getRGB(x  + 2, y - 3));
-					pixel[19] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
-					pixel[20] = new Color(unmodifiedInput.getRGB(x - 1, y - 2));
-					pixel[21] = new Color(unmodifiedInput.getRGB(x - 1, y - 3));
-					pixel[22] = new Color(unmodifiedInput.getRGB(x - 2, y - 1));
-					pixel[23] = new Color(unmodifiedInput.getRGB(x - 2, y - 2));
-					pixel[24] = new Color(unmodifiedInput.getRGB(x - 2, y - 3));
+					          pixel = generateMatrix(y, x);
 
                     // Store each intensity in array
                     for (int k = 0; k < 25; k++) {
