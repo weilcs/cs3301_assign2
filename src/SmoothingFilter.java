@@ -521,6 +521,57 @@ public class SmoothingFilter extends Frame implements ActionListener {
 			}
 			target.resetImage(input);
 		}
+		
+		if ( ((Button)e.getSource()).getLabel().equals("5x5 Gaussian")) {
+			Kernel[] kernels = makeGaussianKernel(5, Float.valueOf(texSigma.getText()));
+			Kernel kernelV = kernels[0];
+			Kernel kernelH = kernels[1];
+
+			// vertical direction convolution
+			ConvolveOp op1 = new ConvolveOp(kernelV);
+			BufferedImage v = null;
+
+			v = op1.filter(source.image, null);
+
+			//horizontal direction convolution
+			ConvolveOp op2 = new ConvolveOp(kernelH);
+			op2.filter(v, input);
+
+			target.resetImage(input);
+
+		}
+	}
+	
+	//A function to create an array of 1-D gaussian kernels, one is in vertical direction, the other is in horizontal direction
+	public static Kernel[] makeGaussianKernel(int rows, float sigma){
+		int r = (rows-1)/2;
+		float r2 = r*r;
+		float[] matrix = new float[rows];
+		float sigma22 = 2*sigma*sigma;
+		float sigmaPi2 = 2*(float)Math.PI*sigma;
+		float sqrtSigmaPi2 = (float)Math.sqrt(sigmaPi2);
+		float total = 0;
+		int index = 0;
+		for (int row = -r; row <= r; row++){
+			float distance = row*row;
+			if (distance > r2)
+				matrix[index] = 0;
+			else
+				matrix[index] = (float)Math.exp(-(distance)/sigma22)/sqrtSigmaPi2;
+			total += matrix[index];
+			index++;
+		}
+
+		for (int i = 0; i < rows; i++){
+			matrix[i] /= total;
+			System.out.println(matrix[i]);
+		}
+		Kernel kernelV = new Kernel(rows, 1, matrix);
+		Kernel kernelH = new Kernel(1, rows, matrix);
+		Kernel[] kernels = new Kernel[2];
+		kernels[0] = kernelV;
+		kernels[1] = kernelH;
+		return kernels;
 	}
 
 
