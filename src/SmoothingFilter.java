@@ -528,13 +528,13 @@ public class SmoothingFilter extends Frame implements ActionListener {
 			Kernel kernelH = kernels[1];
 
 			// vertical direction convolution
-			ConvolveOp op1 = new ConvolveOp(kernelV);
+			ConvolveOp op1 = new ConvolveOp(kernelV, ConvolveOp.EDGE_NO_OP, null);
 			BufferedImage v = null;
 
 			v = op1.filter(source.image, null);
 
 			//horizontal direction convolution
-			ConvolveOp op2 = new ConvolveOp(kernelH);
+			ConvolveOp op2 = new ConvolveOp(kernelH, ConvolveOp.EDGE_NO_OP, null);
 			op2.filter(v, input);
 
 			target.resetImage(input);
