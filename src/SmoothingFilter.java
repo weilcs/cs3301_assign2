@@ -523,57 +523,82 @@ public class SmoothingFilter extends Frame implements ActionListener {
 		}
 		
 		if ( ((Button)e.getSource()).getLabel().equals("5x5 Gaussian")) {
-			Kernel[] kernels = makeGaussianKernel(5, Float.valueOf(texSigma.getText()));
-			Kernel kernelV = kernels[0];
-			Kernel kernelH = kernels[1];
+			int[][] kernelRed = new int[5][5];
+			int[][] kernelGreen = new int[5][5];
+			int[][] kernelBlue = new int[5][5];
+			Color[][] clrKernel = new Color[5][5];
+			int[] xDirection = new int[5];
+			int[] yDirection = new int[5];
+			int red, green, blue;
+			for(int y = 0; y < height; y++)
+				for (int x = 0; x < width; x++){
+					for (int i = 0; i < 5; i++){
+						xDirection[i] = x - 2 + i;
+						yDirection[i] = y - 2 + i;
+						xDirection[i] = xDirection[i] < 0 ? 0 : (xDirection[i] >= width ? width - 1 : xDirection[i]);
+						yDirection[i] = yDirection[i] < 0 ? 0 : (yDirection[i] >= height ? height - 1 : yDirection[i]);
+					}
 
-			// vertical direction convolution
-			ConvolveOp op1 = new ConvolveOp(kernelV, ConvolveOp.EDGE_NO_OP, null);
-			BufferedImage v = null;
+					for(int n=0;n<5;n++ ){
+						for(int m=0;m<5;m++){
+							clrKernel[m][n]= new Color(source.image.getRGB(xDirection[m], yDirection[n]));
+							kernelRed[m][n] = clrKernel[m][n].getRed();
+							kernelGreen[m][n] = clrKernel[m][n].getGreen();
+							kernelBlue[m][n] = clrKernel[m][n].getBlue();
+						}
+					}
 
-			v = op1.filter(source.image, null);
+					red = gaussianFilter(kernelRed);
+					green = gaussianFilter(kernelGreen);
+					blue = gaussianFilter(kernelBlue);
+					red = red < 0 ? 0 : red > 255 ? 255 : red;
+					green = green < 0 ? 0 : green > 255 ? 255 : green;
+					blue = blue < 0 ? 0 : blue > 255 ? 255 : blue;
+					int p = (red << 16) | green << 8 | blue;
+					input.setRGB(x, y, p);
 
-			//horizontal direction convolution
-			ConvolveOp op2 = new ConvolveOp(kernelH, ConvolveOp.EDGE_NO_OP, null);
-			op2.filter(v, input);
+				}
 
 			target.resetImage(input);
 
 		}
 	}
 	
-	//A function to create an array of 1-D gaussian kernels, one is in vertical direction, the other is in horizontal direction
-	public static Kernel[] makeGaussianKernel(int rows, float sigma){
+	public static float[][] makeGaussianKernel(int rows, int cols, float sigma){
 		int r = (rows-1)/2;
-		float r2 = r*r;
-		float[] matrix = new float[rows];
+		//float r2 = r*r;
+		float[][] matrix = new float[rows][cols];
 		float sigma22 = 2*sigma*sigma;
 		float sigmaPi2 = 2*(float)Math.PI*sigma;
 		float sqrtSigmaPi2 = (float)Math.sqrt(sigmaPi2);
 		float total = 0;
-		int index = 0;
-		for (int row = -r; row <= r; row++){
-			float distance = row*row;
-			if (distance > r2)
-				matrix[index] = 0;
-			else
-				matrix[index] = (float)Math.exp(-(distance)/sigma22)/sqrtSigmaPi2;
-			total += matrix[index];
-			index++;
+
+		for (int col = -r; col <= r; col++)
+			for (int row = -r; row <= r; row++) {
+				float distance = row*row;
+
+				matrix[row+2][col+2] = (float)Math.exp(-(distance)/sigma22)/sqrtSigmaPi2;
+				total += matrix[row+2][col+2];
 		}
 
-		for (int i = 0; i < rows; i++){
-			matrix[i] /= total;
-			System.out.println(matrix[i]);
+
+
+		for (int n = 0; n < cols; n++)
+		for (int m = 0; m < rows; m++){
+			matrix[m][n] /= total;
 		}
-		Kernel kernelV = new Kernel(rows, 1, matrix);
-		Kernel kernelH = new Kernel(1, rows, matrix);
-		Kernel[] kernels = new Kernel[2];
-		kernels[0] = kernelV;
-		kernels[1] = kernelH;
-		return kernels;
+		return matrix;
 	}
 
+	public int gaussianFilter(int[][] kernel){
+		int center = 0;
+		float sigma = Float.valueOf(texSigma.getText());
+		float[][] GaussianKernel = makeGaussianKernel(5,5, sigma);
+		for (int y = 0; y < 5; y++)
+		for (int x = 0; x < 5; x++)
+			center += kernel[x][y] * GaussianKernel[x][y];
+		return center;
+	}
 
 
 	public static void main(String[] args) {
