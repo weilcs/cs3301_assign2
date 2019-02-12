@@ -82,7 +82,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
     return y;
   }
 
-  private Color[] generateMatrix(int y, int x) {
+  private Color[] generateBaseMatrix(int y, int x) {
       Color[] subMatrix = new Color[25];
       subMatrix[0] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+2, y)));
       subMatrix[1] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+1, y)));
@@ -313,7 +313,7 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     // Get each neighbouring pixel intensity
-					          pixel = generateMatrix(y, x);
+					          pixel = generateBaseMatrix(y, x);
 
                     // Store each intensity in array
                     for (int k = 0; k < 25; k++) {
@@ -355,7 +355,7 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 				for (int x = 0; x < width; x++) {
 
 					// Not sure if there's a nicer way to do this?
-					pixel = generateMatrix(y, x);
+					pixel = generateBaseMatrix(y, x);
 
 					// Store each intensity in array
 					for (int k = 0; k < 25; k++) {
@@ -394,7 +394,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
-
           region_1 = generateKuwaharaRegion1(y, x);
           region_2 = generateKuwaharaRegion2(y, x);
           region_3 = generateKuwaharaRegion3(y, x);
@@ -407,14 +406,12 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 					float mean4 = 0;
 
 					// Float array to store HSB values for each region
-
 					float[] hsb1 = new float[3];
 					float[] hsb2 = new float[3];
 					float[] hsb3 = new float[3];
 					float[] hsb4 = new float[3];
 
 					int r, g, b;
-
 
 					// Convert each region from RGB to HSB and calculate the mean
 					for (int i = 0; i < 25; i++) {
@@ -452,18 +449,11 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 
 					// Divide each value by the number of pixels to get actual mean
 					mean1 /= region_1.length;
-					//System.out.println(mean1);
-
 					mean2 /= region_2.length;
-					//System.out.println(mean2);
-
 					mean3 /= region_3.length;
-					//System.out.println(mean3);
-
 					mean4 /= region_4.length;
 
 					// Variables to store values for calculating each variance
-
 					float temp1 = 0;
 					float temp2 = 0;
 					float temp3 = 0;
@@ -475,7 +465,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 					float var4 = 0;
 
 					// Calculate variance of each region
-
 					for (int i = 0; i < 25; i++) {
 						temp1 += (hsb1[2] - mean1) * (hsb1[2] - mean1);
 						var1 = temp1 / (region_1.length - 1);
@@ -491,7 +480,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 					}
 
 					// Find which variance is the smallest
-
 					float smallestVar = Math.min(var1, Math.min(var2, Math.min(var3, var4)));
 
 					// Check to see which region has the smallest variance, then use that region's mean
@@ -506,7 +494,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 
 								int p = (newR << 16 | newG << 8 | newB);
 								input.setRGB(x, y, p);
-
 					}
 
 					if (smallestVar == var2) {
@@ -519,11 +506,9 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 
 								int p = (newR << 16 | newG << 8 | newB);
 								input.setRGB(x, y, p);
-
 					}
 
 					if (smallestVar == var3) {
-
 								int rgb = Color.HSBtoRGB(hsb3[0], hsb3[1], mean3);
 								Color newColor = new Color(rgb);
 
@@ -536,7 +521,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 					}
 
 					if (smallestVar == var4) {
-
 								int rgb = Color.HSBtoRGB(hsb4[0], hsb4[1], mean4);
 								Color newColor = new Color(rgb);
 
@@ -588,7 +572,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 					input.setRGB(x, y, p);
 
 				}
-
 			target.resetImage(input);
 
 		}
@@ -610,8 +593,6 @@ private Color[] generateKuwaharaRegion4(int y, int x) {
 				matrix[row+2][col+2] = (float)Math.exp(-(distance)/sigma22)/sqrtSigmaPi2;
 				total += matrix[row+2][col+2];
 		}
-
-
 
 		for (int n = 0; n < cols; n++)
 		for (int m = 0; m < rows; m++){
