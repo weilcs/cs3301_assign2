@@ -1,3 +1,13 @@
+/*
+    Defines the image canvas. Was left unmodified from the source beside for "package src" line used to get the code
+    working with visual studio code.
+
+    Submitted by:
+    Freddie Taylor Pike - 201252723
+    Justin Delaney - 201222684
+    Wei Liu - 201759784
+ */
+
 package src;
 
 import java.awt.*;

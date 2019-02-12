@@ -1,3 +1,14 @@
+/*
+    Defines the SmoothingFilter. Implements the median, mean, Kuwahara, and gaussian filter.
+
+    Bugs: Clicking buttons multiple times, doesn't stack the filter
+
+    Submitted by:
+    Freddie Taylor Pike - 201252723
+    Justin Delaney - 201222684
+    Wei Liu - 201759784
+ */
+
 package src;
 
 import java.util.*;
