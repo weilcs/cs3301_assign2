@@ -8,8 +8,6 @@
     Wei Liu - 201759784
  */
 
-package src;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
