@@ -117,6 +117,162 @@ public class SmoothingFilter extends Frame implements ActionListener {
       return subMatrix;
   }
 
+  private Color[] generateKuwaharaRegion1(int y, int x) {
+    Color[] subMatrix = new Color[25];
+
+    subMatrix[0] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y, y)));
+    subMatrix[1] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y, y)));
+    subMatrix[2] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y, y)));
+    subMatrix[3] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y, y)));
+    subMatrix[4] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y, y)));
+
+    subMatrix[5] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+1, y)));
+    subMatrix[6] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+2, y)));
+    subMatrix[7] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+3, y)));
+    subMatrix[8] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+4, y)));
+
+
+    subMatrix[9] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y+1, y)));
+    subMatrix[10] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y+2, y)));
+    subMatrix[11] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y+3, y)));
+    subMatrix[12] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y+4, y)));
+
+
+    subMatrix[13] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+1, y)));
+    subMatrix[14] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+2, y)));
+    subMatrix[15] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+3, y)));
+    subMatrix[16] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y+4, y)));
+
+
+    subMatrix[17] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y+1, y)));
+    subMatrix[18] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y+2, y)));
+    subMatrix[19] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y+3, y)));
+    subMatrix[20] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y+4, y)));
+
+    subMatrix[21] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y+1, y)));
+    subMatrix[22] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y+2, y)));
+    subMatrix[23] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y+3, y)));
+    subMatrix[24] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y+4, y)));
+
+    return subMatrix;
+}
+
+private Color[] generateKuwaharaRegion2(int y, int x) {
+  Color[] subMatrix = new Color[25];
+
+  subMatrix[0] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[1] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[2] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[3] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[4] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y, y)));
+
+  subMatrix[5] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+1, y)));
+  subMatrix[6] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+2, y)));
+  subMatrix[7] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+3, y)));
+  subMatrix[8] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y+4, y)));
+
+	subMatrix[9] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y+1, y)));
+  subMatrix[10] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y+2, y)));
+  subMatrix[11] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y+3, y)));
+  subMatrix[12] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y+4, y)));
+
+	subMatrix[13] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y+1, y)));
+  subMatrix[14] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y+2, y)));
+  subMatrix[15] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y+3, y)));
+  subMatrix[16] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y+4, y)));
+
+	subMatrix[17] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y+1, y)));
+  subMatrix[18] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y+2, y)));
+  subMatrix[19] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y+3, y)));
+  subMatrix[20] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y+4, y)));
+
+	subMatrix[21] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y+1, y)));
+  subMatrix[22] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y+2, y)));
+  subMatrix[23] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y+3, y)));
+  subMatrix[24] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y+4, y)));
+
+
+
+  return subMatrix;
+}
+
+private Color[] generateKuwaharaRegion3(int y, int x) {
+  Color[] subMatrix = new Color[25];
+
+
+	subMatrix[0] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[1] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[2] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[3] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[4] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-4, y)));
+
+  subMatrix[5] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[6] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[7] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[8] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[9] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[10] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[11] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[12] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[13] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[14] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[15] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[16] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[17] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[18] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[19] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[20] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[21] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-1, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[22] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-2, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[23] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-3, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[24] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x-4, x), checkIfYCoordinateIsValid(y, y)));
+
+  return subMatrix;
+}
+
+private Color[] generateKuwaharaRegion4(int y, int x) {
+  Color[] subMatrix = new Color[25];
+
+  subMatrix[0] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[1] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[2] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[3] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[4] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x, x), checkIfYCoordinateIsValid(y-4, y)));
+
+  subMatrix[5] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[6] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[7] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y, y)));
+  subMatrix[8] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y, y)));
+
+  subMatrix[9] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[10] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[11] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[12] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+1, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[13] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[14] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[15] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[16] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+2, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[17] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[18] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[19] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[20] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+3, x), checkIfYCoordinateIsValid(y-4, y)));
+
+	subMatrix[21] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y-1, y)));
+  subMatrix[22] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y-2, y)));
+  subMatrix[23] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y-3, y)));
+  subMatrix[24] = new Color(unmodifiedInput.getRGB(checkIfXCoordinateIsValid(x+4, x), checkIfYCoordinateIsValid(y-4, y)));
+
+  return subMatrix;
+}
+
+
+
 	// Action listener for button click events
 	public void actionPerformed(ActionEvent e) {
 		// example -- add random noise
@@ -236,140 +392,13 @@ public class SmoothingFilter extends Frame implements ActionListener {
 			Color[] region_3 = new Color[25];
 			Color[] region_4 = new Color[25];
 
-			for (int y = 4; y < height - 4; y++) {
-				for (int x = 4; x < width - 4; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
 
-					// Region 1
-					region_1[0] = new Color(unmodifiedInput.getRGB(x, y));
-					region_1[1] = new Color(unmodifiedInput.getRGB(x - 1, y));
-					region_1[2] = new Color(unmodifiedInput.getRGB(x - 2, y));
-					region_1[3] = new Color(unmodifiedInput.getRGB(x - 3, y));
-					region_1[4] = new Color(unmodifiedInput.getRGB(x - 4, y));
-
-					region_1[5] = new Color(unmodifiedInput.getRGB(x, y + 1));
-					region_1[6] = new Color(unmodifiedInput.getRGB(x, y + 2));
-					region_1[7] = new Color(unmodifiedInput.getRGB(x, y + 3));
-					region_1[8] = new Color(unmodifiedInput.getRGB(x, y + 4));
-
-					region_1[9] = new Color(unmodifiedInput.getRGB(x - 1, y + 1));
-					region_1[10] = new Color(unmodifiedInput.getRGB(x - 1, y + 2));
-					region_1[11] = new Color(unmodifiedInput.getRGB(x - 1, y + 3));
-					region_1[12] = new Color(unmodifiedInput.getRGB(x - 1, y + 4));
-
-					region_1[13] = new Color(unmodifiedInput.getRGB(x - 2, y + 1));
-					region_1[14] = new Color(unmodifiedInput.getRGB(x - 2, y + 2));
-					region_1[15] = new Color(unmodifiedInput.getRGB(x - 2, y + 3));
-					region_1[16] = new Color(unmodifiedInput.getRGB(x - 2, y + 4));
-
-					region_1[17] = new Color(unmodifiedInput.getRGB(x - 3, y + 1));
-					region_1[18] = new Color(unmodifiedInput.getRGB(x - 3, y + 2));
-					region_1[19] = new Color(unmodifiedInput.getRGB(x - 3, y + 3));
-					region_1[20] = new Color(unmodifiedInput.getRGB(x - 3, y + 4));
-
-					region_1[21] = new Color(unmodifiedInput.getRGB(x - 4, y + 1));
-					region_1[22] = new Color(unmodifiedInput.getRGB(x - 4, y + 2));
-					region_1[23] = new Color(unmodifiedInput.getRGB(x - 4, y + 3));
-					region_1[24] = new Color(unmodifiedInput.getRGB(x - 4, y + 4));
-
-
-					//Region 2
-					region_2[0] = new Color(unmodifiedInput.getRGB(x, y));
-					region_2[1] = new Color(unmodifiedInput.getRGB(x + 1, y));
-					region_2[2] = new Color(unmodifiedInput.getRGB(x + 2, y));
-					region_2[3] = new Color(unmodifiedInput.getRGB(x + 3, y));
-					region_2[4] = new Color(unmodifiedInput.getRGB(x + 4, y));
-
-					region_2[5] = new Color(unmodifiedInput.getRGB(x, y + 1));
-					region_2[6] = new Color(unmodifiedInput.getRGB(x, y + 2));
-					region_2[7] = new Color(unmodifiedInput.getRGB(x, y + 3));
-					region_2[8] = new Color(unmodifiedInput.getRGB(x, y + 4));
-
-					region_2[9] = new Color(unmodifiedInput.getRGB(x + 1, y + 1));
-					region_2[10] = new Color(unmodifiedInput.getRGB(x + 1, y + 2));
-					region_2[11] = new Color(unmodifiedInput.getRGB(x + 1, y + 3));
-					region_2[12] = new Color(unmodifiedInput.getRGB(x + 1, y + 4));
-
-					region_2[13] = new Color(unmodifiedInput.getRGB(x + 2, y + 1));
-					region_2[14] = new Color(unmodifiedInput.getRGB(x + 2, y + 2));
-					region_2[15] = new Color(unmodifiedInput.getRGB(x + 2, y + 3));
-					region_2[16] = new Color(unmodifiedInput.getRGB(x + 2, y + 4));
-
-					region_2[17] = new Color(unmodifiedInput.getRGB(x + 3, y + 1));
-					region_2[18] = new Color(unmodifiedInput.getRGB(x + 3, y + 2));
-					region_2[19] = new Color(unmodifiedInput.getRGB(x + 3, y + 3));
-					region_2[20] = new Color(unmodifiedInput.getRGB(x + 3, y + 4));
-
-					region_2[21] = new Color(unmodifiedInput.getRGB(x + 4, y + 1));
-					region_2[22] = new Color(unmodifiedInput.getRGB(x + 4, y + 2));
-					region_2[23] = new Color(unmodifiedInput.getRGB(x + 4, y + 3));
-					region_2[24] = new Color(unmodifiedInput.getRGB(x + 4, y + 4));
-
-					// Region 3
-
-					region_3[0] = new Color(unmodifiedInput.getRGB(x, y));
-					region_3[1] = new Color(unmodifiedInput.getRGB(x, y - 1));
-					region_3[2] = new Color(unmodifiedInput.getRGB(x, y - 2));
-					region_3[3] = new Color(unmodifiedInput.getRGB(x, y - 3));
-					region_3[4] = new Color(unmodifiedInput.getRGB(x, y - 4));
-
-					region_3[5] = new Color(unmodifiedInput.getRGB(x - 1, y - 1));
-					region_3[6] = new Color(unmodifiedInput.getRGB(x - 1, y - 2));
-					region_3[7] = new Color(unmodifiedInput.getRGB(x - 1, y - 3));
-					region_3[8] = new Color(unmodifiedInput.getRGB(x - 1, y - 4));
-
-					region_3[9] = new Color(unmodifiedInput.getRGB(x - 2, y - 1));
-					region_3[10] = new Color(unmodifiedInput.getRGB(x - 2, y - 2));
-					region_3[11] = new Color(unmodifiedInput.getRGB(x - 2, y - 3));
-					region_3[12] = new Color(unmodifiedInput.getRGB(x - 2, y - 4));
-
-					region_3[13] = new Color(unmodifiedInput.getRGB(x - 3, y - 1));
-					region_3[14] = new Color(unmodifiedInput.getRGB(x - 3, y - 2));
-					region_3[15] = new Color(unmodifiedInput.getRGB(x - 3, y - 3));
-					region_3[16] = new Color(unmodifiedInput.getRGB(x - 3, y - 4));
-
-					region_3[17] = new Color(unmodifiedInput.getRGB(x - 4, y - 1));
-					region_3[18] = new Color(unmodifiedInput.getRGB(x - 4, y - 2));
-					region_3[19] = new Color(unmodifiedInput.getRGB(x - 4, y - 3));
-					region_3[20] = new Color(unmodifiedInput.getRGB(x - 4, y - 4));
-
-					region_3[21] = new Color(unmodifiedInput.getRGB(x - 1, y));
-					region_3[22] = new Color(unmodifiedInput.getRGB(x - 2, y));
-					region_3[23] = new Color(unmodifiedInput.getRGB(x - 3, y));
-					region_3[24] = new Color(unmodifiedInput.getRGB(x - 4, y));
-
-					// Region 4
-
-					region_4[0] = new Color(unmodifiedInput.getRGB(x, y));
-					region_4[1] = new Color(unmodifiedInput.getRGB(x, y - 1));
-					region_4[2] = new Color(unmodifiedInput.getRGB(x, y - 2));
-					region_4[3] = new Color(unmodifiedInput.getRGB(x, y - 3));
-					region_4[4] = new Color(unmodifiedInput.getRGB(x, y - 4));
-
-					region_4[5] = new Color(unmodifiedInput.getRGB(x + 1, y));
-					region_4[6] = new Color(unmodifiedInput.getRGB(x + 2, y));
-					region_4[7] = new Color(unmodifiedInput.getRGB(x + 3, y));
-					region_4[8] = new Color(unmodifiedInput.getRGB(x + 4, y));
-
-					region_4[9] = new Color(unmodifiedInput.getRGB(x + 1, y - 1));
-					region_4[10] = new Color(unmodifiedInput.getRGB(x + 1, y - 2));
-					region_4[11] = new Color(unmodifiedInput.getRGB(x + 1, y - 3));
-					region_4[12] = new Color(unmodifiedInput.getRGB(x + 1, y - 4));
-
-					region_4[13] = new Color(unmodifiedInput.getRGB(x + 2, y - 1));
-					region_4[14] = new Color(unmodifiedInput.getRGB(x + 2, y - 2));
-					region_4[15] = new Color(unmodifiedInput.getRGB(x + 2, y - 3));
-					region_4[16] = new Color(unmodifiedInput.getRGB(x + 2, y - 4));
-
-					region_4[17] = new Color(unmodifiedInput.getRGB(x + 3, y - 1));
-					region_4[18] = new Color(unmodifiedInput.getRGB(x + 3, y - 2));
-					region_4[19] = new Color(unmodifiedInput.getRGB(x + 3, y - 3));
-					region_4[20] = new Color(unmodifiedInput.getRGB(x + 3, y - 4));
-
-					region_4[21] = new Color(unmodifiedInput.getRGB(x + 4, y - 1));
-					region_4[22] = new Color(unmodifiedInput.getRGB(x + 4, y - 2));
-					region_4[23] = new Color(unmodifiedInput.getRGB(x + 4, y - 3));
-					region_4[24] = new Color(unmodifiedInput.getRGB(x + 4, y - 4));
-
+          region_1 = generateKuwaharaRegion1(y, x);
+          region_2 = generateKuwaharaRegion2(y, x);
+          region_3 = generateKuwaharaRegion3(y, x);
+          region_4 = generateKuwaharaRegion4(y, x);
 
 					// Variables to store the mean of each region
 					float mean1 = 0;
@@ -522,7 +551,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 			}
 			target.resetImage(input);
 		}
-		
+
 		if ( ((Button)e.getSource()).getLabel().equals("5x5 Gaussian")) {
 			int[][] kernelRed = new int[5][5];
 			int[][] kernelGreen = new int[5][5];
@@ -564,7 +593,7 @@ public class SmoothingFilter extends Frame implements ActionListener {
 
 		}
 	}
-	
+
 	public static float[][] makeGaussianKernel(int rows, int cols, float sigma){
 		int r = (rows-1)/2;
 		//float r2 = r*r;
